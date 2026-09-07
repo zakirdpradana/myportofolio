@@ -5,10 +5,12 @@
 }
 
 :root {
-    --ink: #1c1917;
-    --paper: #faf6f0;
-    --accent: #d95d39;
-    --accent-dark: #a8442a;
+    --text-main: #1F2421;
+    --text-second: #EFECE6;
+    --bg-primary: #F6F3EA;
+    --bg-dark: #1D2A3A;
+    --accent: #B85B32;
+    --accent-light: #D87D4A;
     --line: #e3d9c9;
     --text-muted: #6b6459;
     --radius: 4px;
@@ -16,8 +18,8 @@
 
 body {
     font-family: -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-    color: var(--ink);
-    background-color: var(--paper);
+    color: var(--text-main);
+    background-color: var(--bg-primary);
     line-height: 1.6;
 }
 
@@ -32,7 +34,8 @@ h1, .brand {
 }
 
 .site-header {
-    border-bottom: 1px solid var(--line);
+    background-color: var(--bg-dark);
+    border-bottom: 1px solid var(--bg-dark);
 }
 
 .site-header .container {
@@ -45,7 +48,7 @@ h1, .brand {
 .brand {
     font-size: 1.3rem;
     font-weight: 700;
-    color: var(--ink);
+    color: var(--text-second);
     text-decoration: none;
 }
 
@@ -55,7 +58,7 @@ h1, .brand {
 }
 
 .site-header nav a {
-    color: var(--ink);
+    color: var(--text-second);
     text-decoration: none;
     font-size: 0.95rem;
 }
@@ -85,18 +88,19 @@ h1, .brand {
     font-size: 0.85rem;
     letter-spacing: 0.08em;
     text-transform: uppercase;
-    color: var(--accent-dark);
+    color: var(--accent);
     font-weight: 700;
     margin-bottom: 0.75rem;
 }
 
 .hero-identity h1 {
     font-size: clamp(3rem, 7vw, 5rem);
+    color: var(--bg-dark);
     line-height: 0.95;
 }
 
 .bio {
-    color: var(--text-muted);
+    color: var(--text-main);
     max-width: 480px;
     margin-bottom: 1.5rem;
 }
@@ -126,19 +130,21 @@ h1, .brand {
 }
 
 .social-link {
-    display: inline-block;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
     font-size: 0.85rem;
     font-weight: 600;
     text-decoration: none;
-    color: var(--paper);
-    background-color: var(--ink);
+    color: var(--bg-primary);
+    background-color: var(--accent);
     border-radius: var(--radius);
     padding: 0.5rem 1.1rem;
     transition: background-color 0.2s ease;
 }
 
 .social-link:hover {
-    background-color: var(--accent);
+    background-color: var(--accent-light);
 }
 
 .hero-photo {
@@ -153,8 +159,8 @@ h1, .brand {
     left: 1.25rem;
     width: 100%;
     height: 100%;
-    background-color: var(--accent);
     border-radius: var(--radius);
+    border: 3px solid var(--accent);
     z-index: 0;
 }
 
@@ -166,7 +172,6 @@ h1, .brand {
     aspect-ratio: 1 / 1;
     object-fit: cover;
     border-radius: var(--radius);
-    border: 3px solid var(--ink);
 }
 
 .site-footer {
