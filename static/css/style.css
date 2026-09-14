@@ -213,77 +213,6 @@ h1, .brand {
     }
 }
 
-<<<<<<< Updated upstream
-.edu-section {
-    padding: 5rem 0;
-}
-
-.edu-title {
-    font-family: "Space Grotesk", sans-serif;
-    text-align: center;
-    font-size: 2.5rem;
-    margin-bottom: 2rem;
-    color: var(--bg-dark);
-}
-
-.edu-block {
-    background-color: var(--accent);
-    border-radius: var(--radius);
-    padding: 2rem;
-    display: grid;
-    grid-template-columns: repeat(3, 1fr); 
-    gap: 1.5rem;
-}
-
-.edu-items {
-    display: flex;
-    flex-direction: column;
-    align-items: center;   
-    text-align: center;
-}
-
-.edu-items img {
-    width: 120px;
-    height: 120px;          
-    object-fit: contain;      
-    margin-bottom: 0.75rem; 
-    transition: transform 0.5s ease;
-}
-
-.edu-items h3 {
-    font-size: 0.95rem;
-    font-weight: 600;
-    color: var(--bg-primary);
-}
-
-.edu-items p {
-    opacity: 0; 
-    visibility: hidden;             
-    font-size: 0.85rem;
-    font-weight: 600;
-    color: var(--text-second);
-    transform: translateY(10px);    
-    transition: opacity 0.3s ease, transform 0.3s ease, visibility 0.3s ease;
-}
-
-.edu-items:hover img{
-    transform: scale(1.05);
-}
-
-.edu-items:hover p {
-    opacity: 1;                     
-    visibility: visible;            
-    transform: translateY(0);      
-}
-
-@media (max-width: 600px) {
-    .edu-block {
-        grid-template-columns: 1fr;
-        padding: 1.25rem;
-    }
-}
-
-=======
 .experience-section {
     padding: 4rem 0;
     border-top: 1px solid var(--line);
@@ -440,4 +369,3 @@ h1, .brand {
     flex: none;
   }
 }
->>>>>>> Stashed changes
