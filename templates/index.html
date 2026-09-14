@@ -15,14 +15,9 @@
         <div class="container">
             <a href="{% url 'main:show_main' %}" class="brand">{{ name }}</a>
             <nav>
-<<<<<<< Updated upstream
-                <a href="#profile">Profile</a>
-                <a href="#educations">Educations</a>
-=======
                 <a href="{% url 'main:show_main' %}">Profile</a>
                 <a href="{% url 'main:show_education' %}">Educations</a>
                 <a href="{% url 'main:show_experience' %}">Experience</a>
->>>>>>> Stashed changes
             </nav>
         </div>
     </header>
