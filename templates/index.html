@@ -15,8 +15,14 @@
         <div class="container">
             <a href="#profile" class="brand">Muhammad Zaki Radipradana</a>
             <nav>
+<<<<<<< Updated upstream
                 <a href="#profile">Profile</a>
                 <a href="#educations">Educations</a>
+=======
+                <a href="{% url 'main:show_main' %}">Profile</a>
+                <a href="{% url 'main:show_education' %}">Educations</a>
+                <a href="{% url 'main:show_experience' %}">Experience</a>
+>>>>>>> Stashed changes
             </nav>
         </div>
     </header>
@@ -56,29 +62,6 @@
                         </a>
                     </div>
                 </div>
-            </div>
-        </section>
-
-        <section class="edu-section" id="educations">
-            <div class="container">
-                <h2 class="edu-title">Educations</h2>
-                <article class="edu-block">
-                    <div class="edu-items">
-                        <img src="/static/img/smabel_bg.png" alt="Logo of SMPN 115 Jakarta">
-                        <h3>SMPN 115 Jakarta</h3>
-                        <p>2019-2022</p>
-                    </div>
-                    <div class="edu-items">
-                        <img src="/static/img/yasporbi_bg.png" alt="Logo of SMAS Yasporbi 1 Jakarta">
-                        <h3>SMAS Yasporbi 1 Jakarta</h3>
-                        <p>2022-2025</p>
-                    </div>
-                    <div class="edu-items">
-                        <img src="/static/img/ui_bg.png" alt="Logo of Universitas Indonesia">
-                        <h3>Universitas Indonesia</h3>
-                        <p>2025-Present</p>
-                    </div>
-                </article>
             </div>
         </section>
     </main>

@@ -206,6 +206,7 @@ h1, .brand {
     }
 }
 
+<<<<<<< Updated upstream
 .edu-section {
     padding: 5rem 0;
 }
@@ -275,3 +276,161 @@ h1, .brand {
     }
 }
 
+=======
+.experience-section {
+    padding: 4rem 0;
+    border-top: 1px solid var(--line);
+}
+
+.section-kicker {
+    color: var(--accent);
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+
+.experience-section h1 {
+    margin: 0.4rem 0 1.5rem;
+    font-size: 2rem;
+}
+
+.experience-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 1rem;
+}
+
+.experience-card {
+    padding: 1.25rem;
+    background-color: var(--text-second);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+}
+
+.experience-category {
+    color: var(--accent);
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+}
+
+.experience-card h2 {
+    margin: 0.5rem 0;
+    font-size: 1.25rem;
+}
+
+.experience-description,
+.empty-state {
+    color: var(--text-muted);
+}
+
+.experience-status {
+    margin-top: 1rem;
+    font-size: 0.85rem;
+    font-weight: 600;
+}
+
+.education-section {
+  padding: 4rem 0;
+}
+
+.education-list {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  margin-top: 2rem;
+}
+
+.education-card {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 2rem;
+  background-color: var(--text-second);
+  padding: 1.5rem;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease;
+}
+
+.education-card:hover {
+    background-color: #fff;
+    transform: translateY(-8px);
+    box-shadow: 0 12px 24px rgba(0, 0, 0, 0.15);
+}
+
+.education-card:hover .education-description {
+    opacity: 1;                     
+    visibility: visible;
+    transform: translateY(0); 
+}
+
+.education-card.reverse {
+  flex-direction: row-reverse;
+}
+
+.education-thumbnail {
+  flex: 0 0 200px;
+  height: 150px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  border-radius: 0;
+  background-color: transparent;
+}
+
+.education-thumbnail img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  border-radius: 0;
+  background-color: transparent;
+  transition: transform 0.3s ease;
+}
+
+.education-thumbnail img:hover {
+    transform: scale(1.05);
+}
+
+.placeholder-img {
+  width: 100%;
+  height: 100%;
+  background-color: var(--text-second);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-muted);
+}
+
+.education-content {
+  flex: 1;
+}
+
+.education-date {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--accent);
+  margin: 0.25rem 0 0.75rem;
+}
+
+.education-description {
+    opacity: 0; 
+    visibility: hidden; 
+    transform: translateY(10px);
+    transition: opacity 0.3s ease, transform 0.3s ease, visibility 0.3s ease;
+}
+
+@media (max-width: 640px) {
+  .education-card,
+  .education-card.reverse {
+    flex-direction: column;
+  }
+
+  .education-thumbnail {
+    width: 100%;
+    flex: none;
+  }
+}
+>>>>>>> Stashed changes
