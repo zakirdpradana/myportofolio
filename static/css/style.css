@@ -68,6 +68,13 @@ h1, .brand {
     color: var(--text-second);
     text-decoration: none;
     font-size: 0.95rem;
+    padding-bottom: 4px;
+    border-bottom: 2px solid transparent;
+    transition: border-color 0.3s ease;
+}
+
+.site-header nav a:hover {
+    border-bottom-color: var(--bg-primary);
 }
 
 .hero {
@@ -219,7 +226,7 @@ h1, .brand {
 }
 
 .edu-block {
-    background-color: #B85B32;
+    background-color: var(--accent);
     border-radius: var(--radius);
     padding: 2rem;
     display: grid;
@@ -258,7 +265,7 @@ h1, .brand {
     transition: opacity 0.3s ease, transform 0.3s ease, visibility 0.3s ease;
 }
 
-.edu-items:hover {
+.edu-items:hover img{
     transform: scale(1.05);
 }
 
@@ -275,3 +282,56 @@ h1, .brand {
     }
 }
 
+.experience-section {
+    padding: 4rem 0;
+    border-top: 1px solid var(--line);
+}
+
+.section-kicker {
+    color: var(--accent-dark);
+    font-size: 0.8rem;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+}
+
+.experience-section h1 {
+    margin: 0.4rem 0 1.5rem;
+    font-size: 2rem;
+}
+
+.experience-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+    gap: 1rem;
+}
+
+.experience-card {
+    padding: 1.25rem;
+    background-color: #fff;
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+}
+
+.experience-category {
+    color: var(--accent-dark);
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+}
+
+.experience-card h2 {
+    margin: 0.5rem 0;
+    font-size: 1.25rem;
+}
+
+.experience-description,
+.empty-state {
+    color: var(--text-muted);
+}
+
+.experience-status {
+    margin-top: 1rem;
+    font-size: 0.85rem;
+    font-weight: 600;
+}
