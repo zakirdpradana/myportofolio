@@ -15,8 +15,9 @@ Proyek ini adalah sebuah website portofolio pribadi yang dibangun secara bertaha
 ## Progress Mingguan
 - 2 Sept 2026 - Tutorial 0 & 1: Melakukan setup dan inisialisasi project 
 - 7 Sept 2026 - Tugas 1: Menambahkan section educations dan experiences, serta menambahkan animasi highlight pada nav bar 
-- 9 Sept 2026 - Tutorial 2 : Mengimplementasikan MVT untuk section Experience
+- 9 Sept 2026 - Tutorial 2: Mengimplementasikan MVT untuk section Experience
 - 14 Sept 2026 - Tugas 2: Menambahkan section Education dengan mengimplementasikan MVT
+- 16 Sept 2026 - Tutorial 3: Menambahkan fitur create, search, dan delete pada section experience serta mengimplementasikan autentikasi saat create/delete  
 
 ---
 
