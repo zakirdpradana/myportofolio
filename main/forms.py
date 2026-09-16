@@ -1,8 +1,18 @@
-from django.forms import ModelForm, TextInput, Textarea, URLInput, Select, DateTimeInput
+from django.forms import ModelForm, TextInput, Textarea, URLInput, Select, DateTimeInput, CharField, PasswordInput
 
 from main.models import Experience
 
 class ExperienceForm(ModelForm):
+    secret_key = CharField(
+        label = "Kode Rahasia Admin",
+        widget = PasswordInput(
+            attrs={
+                "placeholder": "Masukkan kode rahasia"
+            }
+        ),
+        required = True
+    )
+
     class Meta:
         model = Experience
         fields = [

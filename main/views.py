@@ -1,3 +1,4 @@
+import os
 from django.shortcuts import render
 from django.contrib import messages
 
@@ -12,6 +13,7 @@ from django.http import HttpResponse
 
 from django.shortcuts import get_object_or_404, redirect, render
 
+SECRET_ADMIN_KEY = os.getenv("SECRET_ADMIN_KEY", "rahasia123")
 
 def show_main(request):
     context = {
@@ -54,15 +56,24 @@ def show_education(request):
 def create_experience(request):
     form = ExperienceForm(request.POST or None)
 
-    if request.method == "POST" and form.is_valid():
-        form.save()
-        messages.success(request, "Pengalaman baru berhasil ditambahkan!")
-        return redirect("main:show_experience")
-
     context = {
         "name": "Muhammad Zaki Radipradana",
         "form": form,
     }
+
+    if request.method == "POST" and form.is_valid():
+        header_key = request.headers.get("X-Secret-Key")
+        form_key = request.POST.get("secret_key")
+
+        if header_key != SECRET_ADMIN_KEY and form_key != SECRET_ADMIN_KEY:
+            messages.error(request, "Kode rahasia salah! Kamu tidak diizinkan menambah data.")
+            return redirect("main:show_experience")
+
+        if form.is_valid():
+            form.save()
+            messages.success(request, "Pengalaman baru berhasil ditambahkan!")
+            return redirect("main:show_experience")
+
     return render(request, "experience_form.html", context)
 
 def get_experience_json(request):
@@ -79,6 +90,13 @@ def delete_experience(request, experience_id):
     experience = get_object_or_404(Experience, pk=experience_id)
 
     if request.method == "POST":
+        header_key = request.headers.get("X-Secret-Key")
+        form_key = request.POST.get("secret_key")
+
+        if header_key != SECRET_ADMIN_KEY and form_key != SECRET_ADMIN_KEY:
+            messages.error(request, "Kode rahasia salah! Gagal menghapus pengalaman.")
+            return redirect("main:show_experience")
+
         experience.delete()
         messages.success(request, "Pengalaman berhasil dihapus!")
         return redirect("main:show_experience")
