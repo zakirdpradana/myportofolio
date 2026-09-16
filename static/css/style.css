@@ -632,3 +632,52 @@ h1, .brand {
         text-align: center;
     }
 }
+
+.messages-container {
+    margin-bottom: 1.5rem;
+}
+
+.alert {
+    padding: 0.75rem 1rem;
+    border-radius: var(--radius);
+    font-size: 0.9rem;
+    font-weight: 600;
+    margin-bottom: 0.5rem;
+    border: 1px solid transparent;
+}
+
+.alert-success {
+    background-color: #d1e7dd;
+    color: #0f5132;
+    border-color: #badbcc;
+}
+
+.alert-error,
+.alert-danger {
+    background-color: #f8d7da;
+    color: #842029;
+    border-color: #f5c2c7;
+}
+
+.modal-form {
+    margin-top: 1rem;
+    width: 100%;
+}
+
+.modal-input-group {
+    margin-bottom: 1rem;
+    width: 100%;
+}
+
+.modal-secret-input {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 0.7rem;
+    font-size: 0.9rem;
+}
+
+.experience-delete-modal__actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 0.75rem;
+}
