@@ -13,7 +13,7 @@ from django.http import HttpResponse
 
 from django.shortcuts import get_object_or_404, redirect, render
 
-SECRET_ADMIN_KEY = os.getenv("SECRET_ADMIN_KEY", "rahasia123")
+SECRET_ADMIN_KEY = os.getenv("SECRET_ADMIN_KEY", "atmin123")
 
 def show_main(request):
     context = {
