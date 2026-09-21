@@ -9,12 +9,31 @@
         <section class="education-section" id="education">
             <div class="container">
                 <p class="section-kicker">Riwayat Pendidikan</p>
-                <h1>Education</h1>
 
+                {% if messages %}
+                    <div class="messages-container">
+                        {% for message in messages %}
+                            <div class="alert alert-{{ message.tags }}">
+                                {{ message }}
+                            </div>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+                
+                <div class="education-header">
+                    <h1>Education</h1>
+                    <a href="{% url 'main:create_education' %}" 
+                        class="button education-add-button">
+                        <span aria-hidden="true">+</span> 
+                        Tambah Education
+                    </a>
+                </div>
                 <div class="education-list">
                     {% for edu in education_list %}
                         <article class="education-card {% if forloop.counter|divisibleby:2 %}reverse{% endif %}">
-            
+                            
+                            {% include "components/education_delete_modal.html" with education=edu %}
+
                             <div class="education-thumbnail">
                                 {% if edu.thumbnail %}
                                     <img src="{{ edu.thumbnail }}" alt="{{ edu.institution_name }}">

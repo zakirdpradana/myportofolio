@@ -6,6 +6,7 @@ from main.models import Experience
 from main.models import Education   
 
 from main.forms import ExperienceForm
+from main.forms import EducationForm
 
 from django.core import serializers
 
@@ -102,3 +103,43 @@ def delete_experience(request, experience_id):
         return redirect("main:show_experience")
     
     return redirect("main:show_experience")
+
+def create_education(request):
+    form = EducationForm(request.POST or None)
+
+    context = {
+        "name": "Muhammad Zaki Radipradana",
+        "form": form,
+    }
+
+    if request.method == "POST" and form.is_valid():
+        header_key = request.headers.get("X-Secret-Key")
+        form_key = request.POST.get("secret_key")
+
+        if header_key != SECRET_ADMIN_KEY and form_key != SECRET_ADMIN_KEY:
+            messages.error(request, "Kode rahasia salah! Kamu tidak diizinkan menambah data.")
+            return redirect("main:show_education")
+
+        if form.is_valid():
+            form.save()
+            messages.success(request, "Pendidikan baru berhasil ditambahkan!")
+            return redirect("main:show_education")
+
+    return render(request, "education_form.html", context)
+
+def delete_education(request, education_id):
+    education = get_object_or_404(Education, pk=education_id)
+
+    if request.method == "POST":
+        header_key = request.headers.get("X-Secret-Key")
+        form_key = request.POST.get("secret_key")
+
+        if header_key != SECRET_ADMIN_KEY and form_key != SECRET_ADMIN_KEY:
+            messages.error(request, "Kode rahasia salah! Gagal menghapus pendidikan.")
+            return redirect("main:show_education")
+
+        education.delete()
+        messages.success(request, "Pendidikan berhasil dihapus!")
+        return redirect("main:show_education")
+    
+    return redirect("main:show_education")

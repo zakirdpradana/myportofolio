@@ -1,0 +1,57 @@
+<p class="education-status">
+    <button type="button"
+            class="education-delete-btn"
+            popovertarget="delete-edu-{{ education.id }}"
+            aria-label="Hapus {{ education.institution_name }}"
+            title="Hapus Pendidikan">
+        <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <polyline points="3 6 5 6 21 6"></polyline>
+            <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
+            <line x1="10" y1="11" x2="10" y2="17"></line>
+            <line x1="14" y1="11" x2="14" y2="17"></line>
+        </svg>
+    </button>
+</p>
+
+<div id="delete-edu-{{ education.id }}"
+     class="education-delete-modal"
+     popover="auto"
+     role="dialog"
+     aria-modal="true"
+     aria-labelledby="delete-edu-title-{{ education.id }}">
+    <button type="button"
+            class="education-delete-modal__backdrop"
+            popovertarget="delete-edu-{{ education.id }}"
+            popovertargetaction="hide"
+            aria-label="Tutup konfirmasi hapus"></button>
+    <div class="education-delete-modal__content">
+        <button type="button"
+                class="education-delete-modal__close"
+                popovertarget="delete-edu-{{ education.id }}"
+                popovertargetaction="hide"
+                aria-label="Tutup konfirmasi hapus">×</button>
+        <h2 id="delete-edu-title-{{ education.id }}">Hapus Pendidikan?</h2>
+        <p>
+            Apakah Anda yakin ingin menghapus 
+            <strong>{{ education.institution_name }}</strong>?
+        </p>
+        <form method="post" action="{% url 'main:delete_education' education.id %}" class="modal-form">
+            {% csrf_token %}
+            <div class="modal-input-group">
+                <input type="password" 
+                       name="secret_key" 
+                       placeholder="Masukkan Kode Rahasia" 
+                       required 
+                       class="modal-secret-input">
+            </div>
+            
+            <div class="education-delete-modal__actions">
+                <button type="button"
+                        class="button button-secondary"
+                        popovertarget="delete-edu-{{ education.id }}"
+                        popovertargetaction="hide">Batal</button>
+                <button type="submit" class="button button-danger">Ya, Hapus</button>
+            </div>
+        </form>
+    </div>
+</div>
