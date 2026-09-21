@@ -163,3 +163,29 @@ def get_education_json(request):
     
     education_json = serializers.serialize("json", educations)
     return HttpResponse(education_json, content_type="application/json")
+
+def update_education(request, education_id):
+    education = get_object_or_404(Education, pk=education_id)
+
+    form = EducationForm(request.POST or None, instance=education)
+
+    if request.method == "POST" and form.is_valid():
+        header_key = request.headers.get("X-Secret-Key")
+        form_key = request.POST.get("secret_key")
+
+        if header_key != SECRET_ADMIN_KEY and form_key != SECRET_ADMIN_KEY:
+            messages.error(
+                request, "Kode rahasia salah! Gagal memperbarui data."
+            )
+            return redirect("main:show_education")
+
+        form.save()
+        messages.success(request, "Data pendidikan berhasil diperbarui!")
+        return redirect("main:show_education")
+
+    context = {
+        "name": "Muhammad Zaki Radipradana",
+        "form": form,
+        "education": education,
+    }
+    return render(request, "education_update_form.html", context)
