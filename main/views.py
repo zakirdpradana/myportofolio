@@ -48,9 +48,19 @@ def show_experience(request):
     return render(request, "experience.html", context)
 
 def show_education(request):
+    json_response = get_education_json(request)
+
+    educations_data = serializers.deserialize(
+        "json",
+        json_response.content.decode("utf-8"),
+    )
+    educations = [edu.object for edu in educations_data]
+    title_query = request.GET.get("title", "").strip()
+
     context = {
         "name": "Muhammad Zaki Radipradana",
-        "education_list": Education.objects.all(),
+        "education_list": educations,
+        "title_query": title_query,
     }
     return render(request, "education.html", context)
 
@@ -143,3 +153,13 @@ def delete_education(request, education_id):
         return redirect("main:show_education")
     
     return redirect("main:show_education")
+
+def get_education_json(request):
+    title_query = request.GET.get("title", "").strip()
+    educations = Education.objects.all()
+    
+    if title_query:
+        educations = educations.filter(title__icontains=title_query)
+    
+    education_json = serializers.serialize("json", educations)
+    return HttpResponse(education_json, content_type="application/json")
