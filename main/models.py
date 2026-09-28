@@ -34,6 +34,9 @@ class Education(models.Model):
     institution_name = models.CharField(max_length=255)
     description = models.TextField()
     thumbnail = models.URLField(blank=True, default="")
+    starred_by = models.ManyToManyField(
+        User, related_name="starred_education", blank=True
+    )
     started_at = models.DateField()
     ended_at = models.DateField(blank=True, null=True)
 

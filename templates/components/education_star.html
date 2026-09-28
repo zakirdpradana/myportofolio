@@ -1,0 +1,11 @@
+<form method="post" action="{% url 'main:toggle_star_education' education.id %}" class="star-form-edu">
+    {% csrf_token %}
+    <div class="star-container-edu">
+        <button type="submit"
+                class="star-btn-edu{% if user in education.starred_by.all %} active{% endif %}"
+                title="{% if education.starred_by.all %}Dibintangi oleh {{ education.starred_by.all|join:', ' }}{% else %}Jadilah yang pertama memberi star{% endif %}">
+            <span class="star-icon-edu">☆</span>
+        </button>
+        <span class="star-count-edu">{{ education.starred_by.count }}</span>
+    </div>
+</form>
