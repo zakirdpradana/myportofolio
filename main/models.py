@@ -18,7 +18,7 @@ class Experience(models.Model):
     category = models.CharField(max_length=20, choices=EXPERIENCE_CHOICES, default='full-time')
     thumbnail = models.URLField(blank=True, null=True)
     starred_by = models.ManyToManyField(
-        User, related_name="starred_projects", blank=True
+        User, related_name="starred_experience", blank=True
     )
     started_at = models.DateTimeField(auto_now_add=True)
     ended_at = models.DateTimeField(blank=True, null=True)
