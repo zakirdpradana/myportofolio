@@ -18,7 +18,8 @@ Proyek ini adalah sebuah website portofolio pribadi yang dibangun secara bertaha
 - 9 Sept 2026 - Tutorial 2: Mengimplementasikan MVT untuk section Experience
 - 14 Sept 2026 - Tugas 2: Menambahkan section Education dengan mengimplementasikan MVT
 - 16 Sept 2026 - Tutorial 3: Menambahkan fitur create, search, dan delete pada section experience serta mengimplementasikan autentikasi saat create/delete
-- 21 Sept 2026 - Tugas 3: Menambahkan fitur create, delete, dan update pada section education dengan mengimplementasikan autentikasi serta memunculkan nofitikasi status  
+- 21 Sept 2026 - Tugas 3: Menambahkan fitur create, delete, dan update pada section education dengan mengimplementasikan autentikasi serta memunculkan nofitikasi status
+- 28 Sept 2026 - Tutorial & Tugas 4: Menambahkan fitur register, login, dan logout. Menambahkan otorisasi untuk berbagai tipe user (pengunjung, pengguna terdaftar, editor, dan pemilik) beserta permission/akses yang dapat dilakukan oleh masing-masing tipe. Menambahkan fitur star experience, star education, dan menampilkan informasi last login pada halaman utama.
 
 ---
 
@@ -73,3 +74,12 @@ Pada tugas 3 ini saya menggunakan Gemini AI dengan strategi, yaitu pertama-tama 
 **Link**:
 - https://share.gemini.google/yOzl5Y8JX8Ip 
 - https://chatgpt.com/share/6ab151cb-4efc-83ec-bb1b-0ddac3524d13
+
+---
+
+### Tugas 4
+
+**AI Disclosure**:
+Pada tugas 4 ini saya dibantu oleh Gemini AI. Dalam menggunakannya, saya pertama-tama meminta AI untuk menjabarkan hal-hal apa saja yang perlu saya lakukan di tugas 4, serta memberikan saya clue pengerjaan, seperti potongan perintah/logika yang digunakan. Kemudian, saat mengerjakan bagian user bertipe editor, saya sedikit mengalami kesulitan. Untuk itu, saya meminta AI untuk menjelaskan pengerjaan bagian tersebut. Terakhir, saya juga meminta AI untuk membuatkan kode HTML dan CSS untuk fitur star pada education section.
+
+**Link**: https://share.gemini.google/Rit0ZoJk68b2
