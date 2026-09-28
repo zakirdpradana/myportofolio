@@ -751,3 +751,7 @@ h1, .brand {
         text-align: center;
     }
 }
+
+.nav-user {
+    color: var(--accent-light);
+}
