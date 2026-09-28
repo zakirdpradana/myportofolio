@@ -4,6 +4,7 @@ import datetime
 from django.contrib import messages
 from django.contrib.auth import login, logout
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
+from django.contrib.auth.decorators import login_required 
 
 from main.models import Experience
 from main.models import Education   
@@ -12,6 +13,7 @@ from main.forms import ExperienceForm
 from main.forms import EducationForm
 
 from django.core import serializers
+from django.core.exceptions import PermissionDenied      
 
 from django.http import HttpResponse
 
@@ -69,7 +71,11 @@ def show_education(request):
     }
     return render(request, "education.html", context)
 
+@login_required(login_url="/login/")
 def create_experience(request):
+    if not request.user.is_superuser:
+        raise PermissionDenied
+    
     form = ExperienceForm(request.POST or None)
 
     context = {
@@ -102,7 +108,11 @@ def get_experience_json(request):
     experience_json = serializers.serialize("json", experiences)
     return HttpResponse(experience_json, content_type="application/json")
 
+@login_required(login_url="/login/")
 def delete_experience(request, experience_id):
+    if not request.user.is_superuser:
+        raise PermissionDenied
+    
     experience = get_object_or_404(Experience, pk=experience_id)
 
     if request.method == "POST":
@@ -119,7 +129,11 @@ def delete_experience(request, experience_id):
     
     return redirect("main:show_experience")
 
+@login_required(login_url="/login/")
 def create_education(request):
+    if not request.user.is_superuser:
+        raise PermissionDenied
+    
     form = EducationForm(request.POST or None)
 
     context = {
@@ -142,7 +156,11 @@ def create_education(request):
 
     return render(request, "education_form.html", context)
 
+@login_required(login_url="/login/")
 def delete_education(request, education_id):
+    if not request.user.is_superuser:
+        raise PermissionDenied
+    
     education = get_object_or_404(Education, pk=education_id)
 
     if request.method == "POST":
@@ -169,7 +187,11 @@ def get_education_json(request):
     education_json = serializers.serialize("json", educations)
     return HttpResponse(education_json, content_type="application/json")
 
+@login_required(login_url="/login/")
 def update_education(request, education_id):
+    if not request.user.is_superuser:
+        raise PermissionDenied
+    
     education = get_object_or_404(Education, pk=education_id)
 
     form = EducationForm(request.POST or None, instance=education)
