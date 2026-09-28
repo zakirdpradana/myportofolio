@@ -105,7 +105,9 @@ def get_experience_json(request):
     if title_query:
         experiences = experiences.filter(title__icontains=title_query)
     
-    experience_json = serializers.serialize("json", experiences)
+    experience_json = serializers.serialize(
+        "json", experiences, use_natural_foreign_keys=True
+    )
     return HttpResponse(experience_json, content_type="application/json")
 
 @login_required(login_url="/login/")
@@ -252,3 +254,15 @@ def logout_user(request):
     response = redirect("main:show_main")
     response.delete_cookie('last_login')
     return response
+
+@login_required(login_url="/login/")
+def toggle_star(request, experience_id):
+    experience = get_object_or_404(Experience, pk=experience_id)
+
+    if request.method == "POST":
+        if request.user in experience.starred_by.all():
+            experience.starred_by.remove(request.user)
+        else:
+            experience.starred_by.add(request.user)
+
+    return redirect("main:show_experience")
