@@ -63,11 +63,13 @@ def show_education(request):
     )
     educations = [edu.object for edu in educations_data]
     title_query = request.GET.get("title", "").strip()
+    is_editor = request.user.is_authenticated and request.user.groups.filter(name='Editor').exists()
 
     context = {
         "name": "Muhammad Zaki Radipradana",
         "education_list": educations,
         "title_query": title_query,
+        "is_editor": is_editor,
     }
     return render(request, "education.html", context)
 
@@ -191,7 +193,7 @@ def get_education_json(request):
 
 @login_required(login_url="/login/")
 def update_education(request, education_id):
-    if not request.user.is_superuser:
+    if not(request.user.is_superuser or request.user.groups.filter(name='Editor').exists()):
         raise PermissionDenied
     
     education = get_object_or_404(Education, pk=education_id)
