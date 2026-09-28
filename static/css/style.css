@@ -777,3 +777,47 @@ h1, .brand {
     background: rgba(255, 255, 255, 0.25);
     font-size: 0.8rem;
 }
+
+.star-container-edu {
+    display: inline-flex;
+    align-items: center;
+    border-radius: 20px;
+    background: transparent;
+    transition: border-color 0.2s ease, background-color 0.2s ease;
+}
+
+/* Tombol Ikon Bintang Education */
+.star-btn-edu {
+    background: transparent;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    padding: 0;
+    font-size: 1.2rem;
+    color: var(--text-muted);
+    transition: color 0.2s ease, transform 0.15s ease;
+    line-height: 1;
+    display: flex;
+    align-items: center;
+}
+
+.star-btn-edu:hover {
+    color: #f59e0b; /* Kuning Amber saat hover */
+    transform: scale(1.2);
+}
+
+/* State ketika user SUDAH meng-star */
+.star-btn-edu.active {
+    color: #f59e0b; /* Kuning Amber terang */
+}
+
+/* Tampilan Jumlah Star khusus Education (Badge Kecil) */
+.star-count-edu {
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: var(--text-muted);
+    padding: 1px 7px;
+    border-radius: 10px;
+    min-width: 20px;
+    text-align: center;
+}

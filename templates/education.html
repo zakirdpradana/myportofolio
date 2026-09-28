@@ -35,6 +35,8 @@
                         <article class="education-card {% if forloop.counter|divisibleby:2 %}reverse{% endif %}">
                             
                             <div class="education-action-buttons">
+                                {% include "components/education_star.html" with education=edu %}
+
                                 {% if user.is_superuser or is_editor %}
                                     <a href="{% url 'main:update_education' edu.id %}" 
                                     class="education-edit-btn" 
