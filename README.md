@@ -20,6 +20,7 @@ Proyek ini adalah sebuah website portofolio pribadi yang dibangun secara bertaha
 - 16 Sept 2026 - Tutorial 3: Menambahkan fitur create, search, dan delete pada section experience serta mengimplementasikan autentikasi saat create/delete
 - 21 Sept 2026 - Tugas 3: Menambahkan fitur create, delete, dan update pada section education dengan mengimplementasikan autentikasi serta memunculkan nofitikasi status
 - 28 Sept 2026 - Tutorial & Tugas 4: Menambahkan fitur register, login, dan logout. Menambahkan otorisasi untuk berbagai tipe user (pengunjung, pengguna terdaftar, editor, dan pemilik) beserta permission/akses yang dapat dilakukan oleh masing-masing tipe. Menambahkan fitur star experience, star education, dan menampilkan informasi last login pada halaman utama.
+- 30 Sept - Tutorial 5: Menambahkan interaktifitas web dengan javascript pada experience section dalam fitur show, create, delete, dan debounce search. Menghapus autentikasi admin secret key dan pesan notifikasi (HTML) saat create experience.   
 
 ---
 
