@@ -4,7 +4,9 @@ import datetime
 from django.contrib import messages
 from django.contrib.auth import login, logout
 from django.contrib.auth.forms import AuthenticationForm, UserCreationForm
-from django.contrib.auth.decorators import login_required 
+from django.contrib.auth.decorators import login_required
+
+from django.views.decorators.http import require_POST
 
 from main.models import Experience
 from main.models import Education   
@@ -15,7 +17,7 @@ from main.forms import EducationForm
 from django.core import serializers
 from django.core.exceptions import PermissionDenied      
 
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 
 from django.shortcuts import get_object_or_404, redirect, render
 
@@ -38,19 +40,12 @@ def show_main(request):
 
 
 def show_experience(request):
-    json_response = get_experience_json(request)
-
-    experiences_data = serializers.deserialize(
-        "json",
-        json_response.content.decode("utf-8"),
-    )
-    experiences = [exp.object for exp in experiences_data]
     title_query = request.GET.get("title", "").strip()
 
     context = {
         "name": "Muhammad Zaki Radipradana",
-        "experience_list": experiences,
         "title_query": title_query,
+        "form": ExperienceForm(),
     }
     return render(request, "experience.html", context)
 
@@ -86,31 +81,55 @@ def create_experience(request):
     }
 
     if request.method == "POST" and form.is_valid():
-        header_key = request.headers.get("X-Secret-Key")
-        form_key = request.POST.get("secret_key")
-
-        if header_key != SECRET_ADMIN_KEY and form_key != SECRET_ADMIN_KEY:
-            messages.error(request, "Kode rahasia salah! Kamu tidak diizinkan menambah data.")
-            return redirect("main:show_experience")
-
-        if form.is_valid():
-            form.save()
-            messages.success(request, "Pengalaman baru berhasil ditambahkan!")
-            return redirect("main:show_experience")
+        form.save()
+        return redirect("main:show_experience")
 
     return render(request, "experience_form.html", context)
 
+@require_POST
+def create_experience_ajax(request):
+    if not request.user.is_superuser:
+        return JsonResponse(
+            {"message": "Hanya pemilik portofolio yang dapat menambahkan pengalaman."},
+            status=403,
+        )
+
+    form = ExperienceForm(request.POST)
+    if form.is_valid():
+        experience = form.save()
+        return JsonResponse(
+            {"message": "Pengalaman berhasil ditambahkan.", "pk": str(experience.id)},
+            status=201,
+        )
+
+    return JsonResponse({"errors": form.errors.get_json_data()}, status=400)
+
 def get_experience_json(request):
     title_query = request.GET.get("title", "").strip()
-    experiences = Experience.objects.all()
+    experiences = Experience.objects.prefetch_related('starred_by').all()
     
     if title_query:
         experiences = experiences.filter(title__icontains=title_query)
     
-    experience_json = serializers.serialize(
-        "json", experiences, use_natural_foreign_keys=True
-    )
-    return HttpResponse(experience_json, content_type="application/json")
+    data = []
+    for experience in experiences:
+        starred_users = experience.starred_by.all()
+        is_starred = request.user in starred_users if request.user.is_authenticated else False
+        starred_by_names = ", ".join([u.username for u in starred_users])
+
+        data.append({
+            "pk": str(experience.id),
+            "fields": {
+                "title": experience.title,
+                "description": experience.description,
+                "category": experience.category,
+                "thumbnail": experience.thumbnail,
+                "star_count": starred_users.count(),
+                "is_starred": is_starred,
+                "starred_by_names": starred_by_names,
+            }
+        })
+    return JsonResponse(data, safe=False)
 
 @login_required(login_url="/login/")
 def delete_experience(request, experience_id):
@@ -120,15 +139,7 @@ def delete_experience(request, experience_id):
     experience = get_object_or_404(Experience, pk=experience_id)
 
     if request.method == "POST":
-        header_key = request.headers.get("X-Secret-Key")
-        form_key = request.POST.get("secret_key")
-
-        if header_key != SECRET_ADMIN_KEY and form_key != SECRET_ADMIN_KEY:
-            messages.error(request, "Kode rahasia salah! Gagal menghapus pengalaman.")
-            return redirect("main:show_experience")
-
         experience.delete()
-        messages.success(request, "Pengalaman berhasil dihapus!")
         return redirect("main:show_experience")
     
     return redirect("main:show_experience")
