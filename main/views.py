@@ -184,6 +184,18 @@ def delete_education(request, education_id):
     
     return redirect("main:show_education")
 
+@require_POST
+def delete_education_ajax(request, education_id):
+    if not request.user.is_superuser:
+        return JsonResponse(
+            {"message": "Hanya pemilik portofolio yang dapat menghapus data."},
+            status=403,
+        )
+
+    education = get_object_or_404(Education, pk=education_id)
+    education.delete()
+    return JsonResponse({"message": "Data pendidikan berhasil dihapus!"}, status=200)
+
 def get_education_json(request):
     title_query = request.GET.get("title", "").strip()
     educations = Education.objects.prefetch_related('starred_by').all()
