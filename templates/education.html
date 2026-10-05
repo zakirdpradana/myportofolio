@@ -83,6 +83,16 @@
             listContainer.classList.toggle('hide', !showList);
         }
 
+        // Mengubah karakter khusus HTML menjadi entity agar ditampilkan sebagai teks
+        function escapeHtml(value) {
+            return String(value ?? '')
+                .replaceAll('&', '&amp;')
+                .replaceAll('<', '&lt;')
+                .replaceAll('>', '&gt;')
+                .replaceAll('"', '&quot;')
+                .replaceAll("'", '&#39;');
+        }
+
         // Memformat Penanggalan
         function formatDate(dateString) {
             if (!dateString) return '';
@@ -100,7 +110,7 @@
             articleElement.className = `education-card${isReverse}`;
 
             const thumbnailHtml = edu.thumbnail
-                ? `<img src="${edu.thumbnail}" alt="${edu.institution_name}">`
+                ? `<img src="${escapeHtml(edu.thumbnail)}" alt="${escapeHtml(edu.institution_name)}">`
                 : `<div class="placeholder-img">No Image</div>`;
 
             const startDateFormatted = formatDate(edu.started_at);
@@ -116,11 +126,11 @@
             const isStarredClass = edu.is_starred ? " active" : "";
             const starIcon = edu.is_starred ? "★" : "☆";
             const starTitle = edu.star_count > 0 
-                ? `Dibintangi oleh ${edu.starred_by_names}` 
+                ? `Dibintangi oleh ${escapeHtml(edu.starred_by_names)}` 
                 : "Jadilah yang pertama memberi star";
 
             const editBtnHtml = (IS_SUPERUSER || IS_EDITOR)
-                ? `<a href="${updateUrl}" class="education-edit-btn" aria-label="Edit ${edu.institution_name}" title="Edit Pendidikan">
+                ? `<a href="${updateUrl}" class="education-edit-btn" aria-label="Edit ${escapeHtml(edu.institution_name)}" title="Edit Pendidikan">
                     <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                         <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"></path>
                         <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
@@ -133,7 +143,7 @@
                     {% csrf_token %}
                     <button type="submit" 
                             class="education-delete-btn" 
-                            aria-label="Hapus ${edu.institution_name}" 
+                            aria-label="Hapus ${escapeHtml(edu.institution_name)}" 
                             title="Hapus Pendidikan"
                             onclick="return confirm('Yakin ingin menghapus pendidikan ini?');">
                         <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -169,9 +179,9 @@
                 </div>
 
                 <div class="education-content">
-                    <h2>${edu.institution_name}</h2>
+                    <h2>${escapeHtml(edu.institution_name)}</h2>
                     <p class="education-date">${startDateFormatted} - ${endDateFormatted}</p>
-                    <p class="education-description">${edu.description}</p>
+                    <p class="education-description">${escapeHtml(edu.description)}</p>
                 </div>
             `;
 
