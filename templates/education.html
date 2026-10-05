@@ -119,9 +119,7 @@
             const starUrl = "{% url 'main:toggle_star_education' '00000000-0000-0000-0000-000000000000' %}"
                 .replace('00000000-0000-0000-0000-000000000000', eduId);
             const updateUrl = "{% url 'main:update_education' '00000000-0000-0000-0000-000000000000' %}"
-                .replace('00000000-0000-0000-0000-000000000000', eduId);
-            const deleteUrl = "{% url 'main:delete_education' '00000000-0000-0000-0000-000000000000' %}"
-                .replace('00000000-0000-0000-0000-000000000000', eduId);     
+                .replace('00000000-0000-0000-0000-000000000000', eduId);   
 
             const isStarredClass = edu.is_starred ? " active" : "";
             const starIcon = edu.is_starred ? "★" : "☆";
@@ -139,21 +137,18 @@
                 : '';
             
             const deleteBtnHtml = IS_SUPERUSER 
-                ? `<form method="post" action="${deleteUrl}" style="display:inline;">
-                    {% csrf_token %}
-                    <button type="submit" 
+                ? `<button type="button" 
                             class="education-delete-btn" 
                             aria-label="Hapus ${escapeHtml(edu.institution_name)}" 
                             title="Hapus Pendidikan"
-                            onclick="return confirm('Yakin ingin menghapus pendidikan ini?');">
+                            onclick="deleteEducationAjax('${eduId}')">
                         <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                             <polyline points="3 6 5 6 21 6"></polyline>
                             <path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"></path>
                             <line x1="10" y1="11" x2="10" y2="17"></line>
                             <line x1="14" y1="11" x2="14" y2="17"></line>
                         </svg>
-                    </button>
-                </form>`
+                    </button>`
                 : '';
 
             articleElement.innerHTML = `
@@ -298,6 +293,38 @@
                 showToast('Gagal menambahkan pendidikan', 'Tidak dapat terhubung ke server. Silakan coba lagi.', 'error');
             } finally {
                 submitButton.disabled = false;
+            }
+        }
+
+        async function deleteEducationAjax(educationId) {
+            if (!confirm('Yakin ingin menghapus riwayat pendidikan ini?')) return;
+
+            const DELETE_EDUCATION_ENDPOINT  = "{% url 'main:delete_education_ajax' '00000000-0000-0000-0000-000000000000' %}"
+                .replace('00000000-0000-0000-0000-000000000000', educationId);  
+
+            try {
+                const response = await fetch(DELETE_EDUCATION_ENDPOINT, {
+                    method: 'POST',
+                    headers: { 
+                        'X-CSRFToken': getCookie('csrftoken'),
+                        'Accept': 'application/json'
+                    }
+                });
+
+                const result = await response.json().catch(() => ({}));
+
+                if (response.ok) {
+                    // 1. Tampilkan Notifikasi Toast
+                    showToast('Berhasil', result.message || 'Pendidikan berhasil dihapus!', 'success');
+                    
+                    // 2. Refetch data tanpa me-reload halaman
+                    fetchEducation(searchInput.value.trim());
+                } else {
+                    showToast('Gagal Menghapus', result.message || 'Terjadi kesalahan.', 'error');
+                }
+            } catch (error) {
+                console.error('Error deleting education:', error);
+                showToast('Gagal Menghapus', 'Tidak dapat terhubung ke server.', 'error');
             }
         }
 
