@@ -483,13 +483,15 @@ h1, .brand {
     line-height: 1;
 }
 
-.experience-search {
+.experience-search,
+.education-search {
     display: flex;
     gap: 0.75rem;
     margin-bottom: 1.5rem;
 }
 
-.experience-search__input {
+.experience-search__input,
+.education-search__input {
     width: 100%;
     min-width: 0;
     padding: 0.7rem;
@@ -500,7 +502,8 @@ h1, .brand {
     font: inherit;
 }
 
-.experience-search__input:focus {
+.experience-search__input:focus,
+.education-search__input:focus {
     outline: 2px solid var(--accent);
     border-color: var(--accent);
 }
@@ -813,11 +816,13 @@ h1, .brand {
         justify-content: center;
     }
 
-    .experience-search {
+    .experience-search, 
+    .education-search {
         flex-direction: column;
     }
 
-    .experience-search .button {
+    .experience-search .button,
+    .education-search .button {
         width: 100%;
     }
 
