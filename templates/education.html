@@ -78,6 +78,8 @@
         const listContainer = document.getElementById('list');
         const searchForm = document.getElementById('education-search-form');
         const searchInput = document.getElementById('search-input');
+        const SEARCH_DEBOUNCE_DELAY = 300;
+        let searchDebounceTimer;
 
         // Menyembunyikan/Menampilkan section halaman
         function displayPageSection({ showLoading = false, showError = false, showEmpty = false, showList = false }) {
@@ -159,7 +161,7 @@
             return articleElement;
         }
 
-        // Fetch Data Project
+        // Fetch Data Education
         async function fetchEducation(searchQuery = "") {
             if (fetchAbortController) fetchAbortController.abort();
             fetchAbortController = new AbortController();
@@ -197,9 +199,22 @@
         }
 
         // Event Handler untuk Form Search
-        searchForm.addEventListener('submit', function(e) {
-            e.preventDefault(); // Mencegah reload halaman standar
-            fetchEducation(searchInput.value.trim()); // Jalankan pencarian via AJAX
+        function searchEducation() {
+            fetchEducation(searchInput.value.trim());
+        }
+
+        searchInput.addEventListener("input", function() {
+            clearTimeout(searchDebounceTimer);
+
+            searchDebounceTimer = setTimeout(function() {
+                searchEducation();
+            }, SEARCH_DEBOUNCE_DELAY);
+        });
+
+        searchForm.addEventListener("submit", function(event) {
+            event.preventDefault();
+            clearTimeout(searchDebounceTimer);
+            searchEducation();
         });
 
         // Start Application
