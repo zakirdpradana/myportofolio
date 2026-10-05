@@ -66,16 +66,6 @@ class ExperienceForm(ModelForm):
 
 
 class EducationForm(ModelForm):
-    secret_key = CharField(
-            label = "Kode Rahasia Admin",
-            widget = PasswordInput(
-                attrs={
-                    "placeholder": "Masukkan kode rahasia"
-                }
-            ),
-            required = True
-        )
-
     class Meta:
         model = Education
         fields = [
