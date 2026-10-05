@@ -50,19 +50,11 @@ def show_experience(request):
     return render(request, "experience.html", context)
 
 def show_education(request):
-    json_response = get_education_json(request)
-
-    educations_data = serializers.deserialize(
-        "json",
-        json_response.content.decode("utf-8"),
-    )
-    educations = [edu.object for edu in educations_data]
     title_query = request.GET.get("title", "").strip()
     is_editor = request.user.is_authenticated and request.user.groups.filter(name='Editor').exists()
 
     context = {
         "name": "Muhammad Zaki Radipradana",
-        "education_list": educations,
         "title_query": title_query,
         "is_editor": is_editor,
     }
@@ -194,13 +186,33 @@ def delete_education(request, education_id):
 
 def get_education_json(request):
     title_query = request.GET.get("title", "").strip()
-    educations = Education.objects.all()
+    educations = Education.objects.prefetch_related('starred_by').all()
     
     if title_query:
-        educations = educations.filter(title__icontains=title_query)
-    
-    education_json = serializers.serialize("json", educations, use_natural_foreign_keys=True)
-    return HttpResponse(education_json, content_type="application/json")
+        educations = educations.filter(institution_name__icontains=title_query)
+
+    data = []
+    for edu in educations:
+        starred_users = edu.starred_by.all()
+        is_starred = request.user in starred_users if request.user.is_authenticated else False
+        starred_by_names = ", ".join([u.username for u in starred_users])
+        
+        data.append({
+            "pk": str(edu.id),
+            "fields": {
+                "institution_name": edu.institution_name,
+                "description": edu.description,
+                "thumbnail": edu.thumbnail,
+                "started_at": edu.started_at.strftime("%Y-%m-%d") if edu.started_at else None,
+                "ended_at": edu.ended_at.strftime("%Y-%m-%d") if edu.ended_at else None,
+                "is_ongoing": edu.is_ongoing,
+                "star_count": starred_users.count(),
+                "is_starred": is_starred,
+                "starred_by_names": starred_by_names,
+            }
+        })
+
+    return JsonResponse(data, safe=False)
 
 @login_required(login_url="/login/")
 def update_education(request, education_id):
