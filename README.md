@@ -22,6 +22,7 @@ Proyek ini adalah sebuah website portofolio pribadi yang dibangun secara bertaha
 - 28 Sept 2026 - Tutorial & Tugas 4: Menambahkan fitur register, login, dan logout. Menambahkan otorisasi untuk berbagai tipe user (pengunjung, pengguna terdaftar, editor, dan pemilik) beserta permission/akses yang dapat dilakukan oleh masing-masing tipe. Menambahkan fitur star experience, star education, dan menampilkan informasi last login pada halaman utama.
 - 30 Sept 2026 - Tutorial 5: Menambahkan interaktifitas web dengan javascript pada experience section dalam fitur show, create, delete, dan debounce search. Menghapus autentikasi admin secret key dan pesan notifikasi (HTML) saat create experience.   
 - 5 Okt 2026 - Tugas 5: Menambahkan interaktifitas web dengan javascript pada education section dalam fitur show, create, dan delete. Menambahkan search bar dengan debouncing. Menambahkan notifikasi toast ketika berhasil menghapus data education. Menghapus autentikasi admin secret key dan pesan notifikasi (HTML) saat create education.   
+- 4 Nov 2026 - Tutorial 7: Mengimplementasikan Django REST Framework (DRF) pada section Experience yang meliputi pembuatan Serializer, Custom Permission, REST API endpoints, integrasi AJAX berbasis JSON, serta unit test API.   
 
 ---
 
