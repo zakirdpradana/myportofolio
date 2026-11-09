@@ -23,6 +23,7 @@ Proyek ini adalah sebuah website portofolio pribadi yang dibangun secara bertaha
 - 30 Sept 2026 - Tutorial 5: Menambahkan interaktifitas web dengan javascript pada experience section dalam fitur show, create, delete, dan debounce search. Menghapus autentikasi admin secret key dan pesan notifikasi (HTML) saat create experience.   
 - 5 Okt 2026 - Tugas 5: Menambahkan interaktifitas web dengan javascript pada education section dalam fitur show, create, dan delete. Menambahkan search bar dengan debouncing. Menambahkan notifikasi toast ketika berhasil menghapus data education. Menghapus autentikasi admin secret key dan pesan notifikasi (HTML) saat create education.   
 - 4 Nov 2026 - Tutorial 7: Mengimplementasikan Django REST Framework (DRF) pada section Experience yang meliputi pembuatan Serializer, Custom Permission, REST API endpoints, integrasi AJAX berbasis JSON, serta unit test API.   
+- 9 Nov 2026 - Tugas 6: Mengubah pengimplementasian form untuk mengedit data education menjadi menggunakan AJAX. Mengimplementasikan Django REST Framework (DRF) pada section Education yang meliputi pembuatan Serializer, Views dengan Custom Permission, REST API endpoints, integrasi AJAX berbasis JSON, serta unit test API.  
 
 ---
 
@@ -87,6 +88,8 @@ Pada tugas 4 ini saya dibantu oleh Gemini AI. Dalam menggunakannya, saya pertama
 
 **Link**: https://share.gemini.google/Rit0ZoJk68b2
 
+---
+
 ### Tugas 5
 1. Debouncing adalah teknik untuk menunda sebuah fungsi hingga suatu jeda waktu berlalu tanpa event baru. Dalam suatu fitur pencarian, debouncing penting untuk diterapkan agar saat user mencari suatu kata, browser tidak mengirim request untuk setiap event/huruf yang ada di kata tersebut ke server. Hal ini perlu dicegah karena dapat memberatkan kinerja server. Dengan menerapkan debouncing, server baru akan menerima request ketika user telah selesai mengetikkan katanya/waktu timer-nya sudah habis.
 
@@ -98,3 +101,44 @@ Pada tugas 4 ini saya dibantu oleh Gemini AI. Dalam menggunakannya, saya pertama
 Pada tugas 5 ini saya dibantu oleh Gemini AI. Strategi saya adalah dengan pertama-tama meminta AI untuk mendefinisikan apa saja yang perlu saya lakukan pada tugas 5 ini dan menjabarkan kode apa saja yang perlu diimplementasikan kembali dari tutorial 5 berdasarkan kode yang telah saya buat sebelumnya untuk bagian education. Kemudian, saya juga meminta AI untuk menambahkan search bar pada bagian education di web portofolio saya. Saya juga meminta AI untuk melakukan troubleshooting ketika terdapat error, seperti tampilan search bar, tombol star, dan delete yang belum sesuai, serta data education yang tidak berhasil ditampilkan. Terakhir, saya meminta bantuan AI untuk menjelaskan bagaimana cara membuat fitur baru di web saya, yaitu menambahkan toast notification ketika berhasil menghapus suatu data di bagian education.
 
 **Link**: https://share.gemini.google/UCgVrByt2sAh
+
+---
+
+### Tugas 6
+1.  REST (Representational State Transfer) adalah sebuah gaya arsitektur yang digunakan untuk merancang web API, bukan sebuah library ataupun format data. 
+
+    Sebuah API yang mengembalikan JSON belum tentu dapat disebut RESTful karena JSON hanyalah sebuah format representasi data, sedangkan REST adalah sebuah arsitektur dan prinsip desain sistem. Sebuah API baru dapat dikategorikan sebagai RESTful jika memenuhi prinsip-prinsip arsitektur REST, di antaranya:
+    - Data diperlakukan sebagai resource
+    - HTTP method menyatakan tindakan
+    - Klien dan server bertukar representasi data
+
+    Perbedaan PUT dan PATCH:
+    - PUT:\
+    PUT digunakan untuk mengirim representasi pengganti objek secara utuh, sehingga semua field wajib dikirimkan di dalam request body. Contoh penggunaan PUT adalah ketika ingin memperbarui seluruh data dari field-field suatu bagian web secara sekaligus. 
+    - PATCH:\
+    PATCH digunakan untuk melakukan perubahan secara parsial dengan hanya mengirimkan field yang ingin diubah saja dalam request body. Contoh penggunaan PATCH adalah ketika ingin memperbarui judul/nama dari suatu data tanpa mengubah/mengirim ulang data pada field lainnya.
+
+2.  Serializer pada DRF memiliki dua peran utama, yaitu saat proses pembacaan dan penulisan data. Pada proses pembacaan data (GET), serializer mengubah     objek model Django menjadi tipe data Python yang siap dirender ke dalam bentuk JSON (serialization). Sementara itu, pada proses penulisan data (POST/PUT/PATCH), serializer memvalidasi input dari klien dan mengubahnya menjadi data yang siap disimpan ke database (deserialization).
+
+    Keuntungan Serializer dibandingkan merakit dictionary secara manual dengan JsonResponse:
+    - Serializer secara otomatis dapat memetakan objek model menjadi data JSON tanpa perlu merakit dictionary satu per satu menggunakan perulangan manual.
+    - Serializer dapat menangani validasi input secara otomatis menggunakan method .is_valid() yang langsung mengembalikan status HTTP 400 beserta pesan kesalahan per field.
+    - Serializer dapat mempermudah pembuatan field read-only sekaligus mencegah data sensitif ikut terekspos.
+    - Serializer dapat menyederhanakan pembuatan dan pembaruan data di database melalui method .save().
+
+3.  Perbedaan autentikasi dan otorisasi pada Django REST Framework:
+    - Autentikasi:\
+    Autentikasi merupakan tahapan yang mengenali identitas pengguna yang melakukan request
+    - Otorisasi:\
+    Otorisasi merupakan tahapan yang memutuskan apakah pengguna yang sudah teridentifikasi diizinkan untuk menjalankan method/melakukan tindakan tertentu pada suatu endpoint API.
+
+    Hak akses juga harus diperiksa di server karena menyembunyikan tombol pada template HTML hanya dapat melindungi dari segi frontend-nya saja. Hal tersebut tidak menjamin keamanan aplikasi karena pengguna yang berniat jahat dapat mengabaikan antarmuka dan langsung mengirimkan request POST, PATCH, atau DELETE ke endpoint URL API melalui console browser atau Fetch API. Oleh karena itu, pemeriksaan hak akses wajib dilakukan oleh permission class di server untuk menolak request yang tidak sah dengan mengembalikan status HTTP 403 Forbidden.
+
+4.  Permintaan yang mengubah data tetap memerlukan token CSRF saat API menggunakan SessionAuthentication karena browser akan secara otomatis mengirimkan cookie sessionid ke domain tujuan pada setiap request HTTP. Celah ini dapat dimanfaatkan oleh situs berbahaya pihak ketiga untuk melancarkan serangan Cross-Site Request Forgery (CSRF). Tanpa token CSRF sebagai kunci rahasia yang divalidasi server, aplikasi tidak mampu membedakan permintaan sah dari pengguna asli dengan permintaan buatan dari pihak luar, sehingga dapat membahayakan pengguna dari aksi pembaruan data tanpa izin.
+
+    Sementara itu, pengujian menggunakan force_authenticate tidak cukup untuk membuktikan berjalannya perlindungan CSRF karena fitur ini dengan sengaja mengabaikan alur autentikasi standar serta seluruh middleware Django, termasuk CsrfViewMiddleware. Keberhasilan pengujian dengan force_authenticate hanya sebatas memvalidasi logika aplikasi dan otorisasi hak akses pengguna saja, bukan membuktikan bahwa mekanisme pengamanan CSRF benar-benar aktif dan efektif pada kondisi nyata.
+
+**AI Disclosure**: 
+Pada tugas 6 ini saya dibantu oleh Gemini AI. Pertama-tama, saya meminta AI untuk menjabarkan hal apa saja yang perlu saya lakukan pada tugas 6 ini beserta penjelasan terkait konsep dan kode-kode yang perlu saya implementasikan kembali dari tutorial 7. Kemudian, setelah saya mengimplementasikan kode-kode tersebut, saya meminta AI untuk memeriksa kebenaran dari kode yang telah saya buat. Saya juga meminta AI untuk mengimplementasikan AJAX dan API Tests untuk Education Section portofolio saya, serta melakukan debugging terhadap error-error yang muncul.
+
+**Link**: https://share.gemini.google/XL9yPWIGKtr8
