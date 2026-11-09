@@ -25,7 +25,7 @@
                 <form id="education-search-form" class="education-search">
                     <input type="search"
                            id="search-input"
-                           name="title"
+                           name="institution_name"
                            value="{{ title_query }}"
                            placeholder="Cari berdasarkan nama institusi..."
                            class="education-search__input"
@@ -283,7 +283,9 @@
 
             try {
                 const formData = new FormData(educationForm);
-                const payload = Object.fromEntries(formData.entries());
+                const payload = Object.fromEntries([
+                    'institution_name', 'description', 'thumbnail', 'started_at', 'ended_at'
+                ].map(name => [name, formData.get(name)]));
 
                 payload.is_ongoing = educationForm.querySelector('[name="is_ongoing"]')?.checked || false;
 
