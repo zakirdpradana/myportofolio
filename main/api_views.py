@@ -1,6 +1,6 @@
 from django.shortcuts import get_object_or_404
 from rest_framework import status
-from rest_framework.authentication import SessionAuthentication
+from rest_framework.authentication import SessionAuthentication, TokenAuthentication
 from rest_framework.decorators import (
     api_view,
     authentication_classes,
@@ -14,8 +14,16 @@ from main.permissions import IsPortfolioOwnerOrReadOnly, IsPortfolioOwnerOrEdito
 from main.serializers import ExperienceSerializer, EducationSerializer
 
 
+@api_view(["POST"])
+@permission_classes([IsAuthenticated])
+def api_logout(request):
+    if request.auth is not None:
+        request.auth.delete()
+    return Response(status=status.HTTP_204_NO_CONTENT)
+
+
 @api_view(["GET", "HEAD", "POST"])
-@authentication_classes([SessionAuthentication])
+@authentication_classes([TokenAuthentication, SessionAuthentication])
 @permission_classes([IsPortfolioOwnerOrReadOnly])
 def experience_list(request):
     if request.method in ("GET", "HEAD"):
@@ -33,7 +41,7 @@ def experience_list(request):
 
 
 @api_view(["GET", "HEAD", "PUT", "PATCH", "DELETE"])
-@authentication_classes([SessionAuthentication])
+@authentication_classes([TokenAuthentication, SessionAuthentication])
 @permission_classes([IsPortfolioOwnerOrReadOnly])
 def experience_detail(request, experience_id):
     experience = get_object_or_404(
